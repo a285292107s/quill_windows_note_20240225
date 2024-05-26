@@ -39,13 +39,15 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: NotesPage(),
+        home: const NotesPage(),
       ),
     );
   }
 }
 
 class NotesPage extends StatelessWidget {
+  const NotesPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'note.dart';
 
+//Provider：供应商
+//Notifier：通告人
 class NoteProvider with ChangeNotifier {
-  List<Note> _notes = [];
+  final List<Note> _notes = [];
   List<Note> _filteredNotes = [];
 
   List<Note> get notes => _filteredNotes.isNotEmpty ? _filteredNotes : _notes;

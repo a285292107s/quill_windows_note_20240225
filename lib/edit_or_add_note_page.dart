@@ -20,11 +20,11 @@ class EditOrAddNotePage extends StatelessWidget {
     }
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(note == null ? 'Add Note' : 'Edit Note'),
-      //   backgroundColor: Colors.blueGrey[900],
-      //   foregroundColor: Colors.white,
-      // ),
+      appBar: AppBar(
+        title: Text(note == null ? 'Add Note' : 'Edit Note'),
+        backgroundColor: Colors.blueGrey[900],
+        foregroundColor: Colors.white,
+      ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
