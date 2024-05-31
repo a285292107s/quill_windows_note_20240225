@@ -4,6 +4,8 @@ import 'edit_or_add_note_page.dart';
 import 'note_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'theme.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await windowManager.ensureInitialized();
@@ -36,23 +38,68 @@ class _MyAppState extends State<MyApp> {
       create: (context) => NoteProvider(),
       child: MaterialApp(
         title: 'Notes App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        debugShowCheckedModeBanner: false,
+        theme: lightTheme,
+        darkTheme: darkTheme,
+        themeMode: ThemeMode.system,
         home: const NotesPage(),
       ),
     );
   }
 }
 
-class NotesPage extends StatelessWidget {
+class NotesPage extends StatefulWidget {
   const NotesPage({super.key});
+
+  @override
+  State<NotesPage> createState() => _NotesPageState();
+}
+
+class _NotesPageState extends State<NotesPage> {
+  bool isMaximized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    checkMaximizedStatus();
+  }
+
+  void checkMaximizedStatus() async {
+    isMaximized = await windowManager.isMaximized();
+    setState(() {});
+  }
+
+  void toggleMaximize() async {
+    isMaximized ? windowManager.restore() : windowManager.maximize();
+    isMaximized = !isMaximized;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Notes'),
+        //leading: Icon(Icons.menu),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.minimize),
+            onPressed: () {
+              windowManager.minimize();
+            },
+          ),
+          IconButton(
+            //没找到还原按钮，先用同一个按钮凑合着
+            icon: Icon(isMaximized ? Icons.crop_square : Icons.crop_square),
+            onPressed: toggleMaximize,
+          ),
+          IconButton(
+            icon: Icon(Icons.close),
+            onPressed: () {
+              windowManager.close();
+            },
+          ),
+        ],
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(48.0),
           child: Padding(
