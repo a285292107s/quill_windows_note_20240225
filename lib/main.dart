@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
 import 'edit_or_add_note_page.dart';
+import 'inbox.dart';
 import 'note_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -42,7 +43,7 @@ class _MyAppState extends State<MyApp> {
         theme: lightTheme,
         darkTheme: darkTheme,
         themeMode: ThemeMode.system,
-        home: const NotesPage(),
+        home: SendNotePage(),
       ),
     );
   }
