@@ -35,16 +35,13 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => NoteProvider(),
-      child: MaterialApp(
-        title: 'Notes App',
-        debugShowCheckedModeBanner: false,
-        theme: lightTheme,
-        darkTheme: darkTheme,
-        themeMode: ThemeMode.system,
-        home: SendNotePage(),
-      ),
+    return MaterialApp(
+      title: 'Notes App',
+      debugShowCheckedModeBanner: false,
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: ThemeMode.system,
+      home: SendNotePage(),
     );
   }
 }
@@ -80,31 +77,31 @@ class _NotesPageState extends State<NotesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notes'),
+        title: const Text('Notes'),
         //leading: Icon(Icons.menu),
         actions: [
           IconButton(
-            icon: Icon(Icons.minimize),
+            icon: const Icon(Icons.minimize),
             onPressed: () {
               windowManager.minimize();
             },
           ),
           IconButton(
-            //没找到还原按钮，先用同一个按钮凑合着
-            icon: Icon(isMaximized ? Icons.crop_square : Icons.crop_square),
+            //最大化和窗口化
+            icon: Icon(isMaximized ? Icons.crop_square_outlined : Icons.fit_screen_outlined),
             onPressed: toggleMaximize,
           ),
           IconButton(
-            icon: Icon(Icons.close),
+            icon: const Icon(Icons.close),
             onPressed: () {
               windowManager.close();
             },
           ),
         ],
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(48.0),
+          preferredSize: const Size.fromHeight(48.0),
           child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: TextField(
               decoration: InputDecoration(
                 hintText: 'Search notes...',
@@ -113,7 +110,7 @@ class _NotesPageState extends State<NotesPage> {
                 ),
                 filled: true,
                 fillColor: Colors.white,
-                contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
               ),
               onChanged: (query) {
                 Provider.of<NoteProvider>(context, listen: false)
@@ -145,7 +142,7 @@ class _NotesPageState extends State<NotesPage> {
                   );
                 },
                 trailing: IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: const Icon(Icons.delete),
                   onPressed: () {
                     noteProvider.removeNoteAt(index);
                   },
@@ -164,7 +161,7 @@ class _NotesPageState extends State<NotesPage> {
             ),
           );
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
