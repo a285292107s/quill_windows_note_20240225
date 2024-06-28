@@ -27,6 +27,7 @@ final ThemeData lightTheme=FlexThemeData.light(
   swapLegacyOnMaterial3: true,
   // To use the Playground font, add GoogleFonts package and uncomment
   // fontFamily: GoogleFonts.notoSans().fontFamily,
+  fontFamily:"LXGWWenKaiLite",
 );
 
 final ThemeData darkTheme=FlexThemeData.dark(
@@ -51,6 +52,7 @@ final ThemeData darkTheme=FlexThemeData.dark(
   swapLegacyOnMaterial3: true,
   // To use the Playground font, add GoogleFonts package and uncomment
   // fontFamily: GoogleFonts.notoSans().fontFamily,
+  fontFamily:"LXGWWenKaiLite",
 );
 // If you do not have a themeMode switch, uncomment this line
 // to let the device system mode control the theme mode:

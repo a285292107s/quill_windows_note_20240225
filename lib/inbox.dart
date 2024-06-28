@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:window_manager/window_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SendNotePage extends StatefulWidget {
   const SendNotePage({super.key});
@@ -16,7 +17,6 @@ class _SendNotePageState extends State<SendNotePage> {
   final TextEditingController _apiController = TextEditingController();
   String _responseBody = '';
   bool _isLocked = false;
-  String url = '';
 
 //按下发送按钮后事件
   Future<void> sendNoteToInbox() async {
@@ -31,7 +31,7 @@ class _SendNotePageState extends State<SendNotePage> {
 
     try {
       final response = await http.post(
-        Uri.parse(url),
+        Uri.parse(_apiController.text),
         headers: headers,
         body: json.encode({'content': content}),
       );
@@ -58,10 +58,25 @@ class _SendNotePageState extends State<SendNotePage> {
 
   bool isMaximized = false;
 
+  Future<void> saveAPI(String api) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('api', api);
+  }
+
+// Retrieving a value
+  Future<String?> fetchAPI() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('api');
+  }
+
   @override
   void initState() {
     super.initState();
     checkMaximizedStatus();
+
+    fetchAPI().then((api) {
+      _apiController.text = api ?? "";
+    });
   }
 
   void checkMaximizedStatus() async {
@@ -99,8 +114,8 @@ class _SendNotePageState extends State<SendNotePage> {
                       ),
                       //style: const TextStyle(fontSize: 16.0),
                       onChanged: (text) {
-                        // print("Editing complete: ${_apiController.text}");
-                        url = _apiController.text;
+                        // print("输入内容: ${_apiController.text}");
+                        saveAPI(text); //这个保存频率太高了，感觉可能会出问题。
                       },
                     ),
                   ),
@@ -138,11 +153,13 @@ class _SendNotePageState extends State<SendNotePage> {
                 controller: _controller,
                 enabled: !_isLocked,
                 maxLines: null,
-                minLines: 99,
-                decoration: const InputDecoration(
-                  hintText: 'Enter your note here',
-                  border: OutlineInputBorder(),
-                ),
+                minLines: 4,
+                // style: const TextStyle(
+                //   fontFamily: 'LXGWWenKaiLite', // 指定字体家族
+                //   fontSize: 16.0, // 字体大小
+                //   color: Colors.black, // 字体颜色
+                //   fontWeight: FontWeight.bold, // 字体粗细
+                // ),
               ),
             ),
           ),

@@ -41,6 +41,7 @@ dependencies:
   provider: ^6.1.2
   flex_color_scheme: ^7.3.1
   http: ^1.2.1
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   flutter_test:
@@ -94,3 +95,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: LXGWWenKaiLite
+      fonts:
+        - asset: fonts/LXGWWenKaiLite-Regular.ttf
